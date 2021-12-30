@@ -1,7 +1,9 @@
 import React from 'react';
+import useStyles from './styles';
 
-const Form = ()=>{
-    return(
+const Form = () => {
+    const classes = useStyles();
+    return (
         <div>
             Form
         </div>
