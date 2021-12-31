@@ -6,14 +6,13 @@ import cors from 'cors';
 import postRouter from './routes/posts.js';
 
 const app = express();
+app.use(bodyParser.json({ limit: "30mb", extended: true }))
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 app.use(cors());
 
 app.use('/posts', postRouter);
 
-
-app.use(bodyParser.json({ limit: "30mb", extended: true }))
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 const CONNECTION_URL = 'mongodb+srv://robinv312:Aims%402022@cluster0.xcwyn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
