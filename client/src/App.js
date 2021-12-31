@@ -4,7 +4,7 @@ import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
 import Posts from './components/Posts/Posts';
 import Form from './components/Form/Form';
 
-import {getPosts} from './actions/posts';
+import { getPosts } from './actions/posts';
 
 import memories from './images/memories.png';
 import useStyles from './styles';
@@ -17,7 +17,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(getPosts());
-    },[dispatch]);
+    }, [dispatch]);
 
     return (
         <Container maxWidth="lg">
