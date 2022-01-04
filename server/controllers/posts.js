@@ -1,25 +1,45 @@
 import postMessage from '../models/postMessage.js';
+import mongoose from 'mongoose';
 
 
 export const getPost = async (req, res) => {
-    try{
+    try {
         const postMessages = await postMessage.find();
         res.status(200).json(postMessages)
-    }catch(error){
-        res.status(404).json({message: error.message})
+    } catch (error) {
+        res.status(404).json({ message: error.message })
     }
 }
 
 export const createPost = async (req, res) => {
-    console.log("request body",req.body);
     const post = req.body;
     const newPost = new postMessage(post);
-    try{
+    try {
         await newPost.save();
         res.status(201).json(newPost);
-    } catch(error){
-        res.status(409).json({message: error.message})
+    } catch (error) {
+        res.status(409).json({ message: error.message })
 
     }
 
+}
+
+export const updatePost = async (req, res) => {
+    const { id } = req.params;
+    const { title, message, creator, selectedFile, tags } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+
+    const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
+
+    await postMessage.findByIdAndUpdate(id, updatedPost, { new: true });
+
+    res.json(updatedPost);
+}
+
+export const deletePost = async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+    await postMessage.findByIdAndRemove(id);
+    res.json({ message: 'post deleted successfully' });
 }
